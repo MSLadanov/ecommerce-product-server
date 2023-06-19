@@ -16,6 +16,9 @@ app.get("/", (req, res) => {
   res.send("Hello world");
 });
 
+// Last handler
+app.use(errorHandler)
+
 const start = async () => {
   try {
     await sequelize.authenticate();
