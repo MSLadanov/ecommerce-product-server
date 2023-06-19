@@ -1,13 +1,13 @@
 const Router = require('express')
-
+const sneakerController = require('../controllers/sneakerController')
 const router = new Router()
 
-router.post('/')
+router.post('/', sneakerController.createSneaker)
 
-router.get('/')
+router.get('/', sneakerController.getAllSneakers)
 
-router.get('/:id')
+router.get('/:id', sneakerController.getSneakerById)
 
-router.delete('/:id')
+router.delete('/:id', sneakerController.deleteSneaker)
 
 module.exports = router
