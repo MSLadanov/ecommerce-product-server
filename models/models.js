@@ -70,7 +70,19 @@ const Sneakers = sequelize.define("sneakers", {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  img: {
+  img1: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  img2: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  img3: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  img4: {
     type: DataTypes.STRING,
     allowNull: false,
   },
