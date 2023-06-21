@@ -1,7 +1,7 @@
 const uuid = require("uuid");
 const path = require("path");
 const { Sneakers } = require("../models/models");
-const ApiError = require("../error/ApiError")
+const ApiError = require("../error/ApiError");
 
 class SneakerController {
   async createSneaker(req, res, next) {
@@ -27,19 +27,19 @@ class SneakerController {
       const sneakers = await Sneakers.create({ ...sneaker });
       return res.json(sneakers);
     } catch (error) {
-        next(ApiError.badRequest(error.message))
+      next(ApiError.badRequest(error.message));
     }
   }
   async getAllSneakers(req, res) {
-    let sneakers = await Sneakers.findAll()
-    return res.json(sneakers)
+    let sneakers = await Sneakers.findAll();
+    return res.json(sneakers);
   }
   async getSneakerById(req, res) {
-    const {id} = req.params
+    const { id } = req.params;
     const sneaker = await Sneakers.findOne({
-        where:{id}
-    })
-    return res.json(sneaker)
+      where: { id },
+    });
+    return res.json(sneaker);
   }
   async deleteSneaker() {}
 }
