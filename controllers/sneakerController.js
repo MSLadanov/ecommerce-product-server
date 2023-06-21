@@ -34,7 +34,13 @@ class SneakerController {
     let sneakers = await Sneakers.findAll()
     return res.json(sneakers)
   }
-  async getSneakerById() {}
+  async getSneakerById(req, res) {
+    const {id} = req.params
+    const sneaker = await Sneakers.findOne({
+        where:{id}
+    })
+    return res.json(sneaker)
+  }
   async deleteSneaker() {}
 }
 
