@@ -30,7 +30,10 @@ class SneakerController {
         next(ApiError.badRequest(error.message))
     }
   }
-  async getAllSneakers() {}
+  async getAllSneakers(req, res) {
+    let sneakers = await Sneakers.findAll()
+    return res.json(sneakers)
+  }
   async getSneakerById() {}
   async deleteSneaker() {}
 }
