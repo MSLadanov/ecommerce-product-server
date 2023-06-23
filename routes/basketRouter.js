@@ -1,16 +1,17 @@
 const Router = require('express')
 const basketController = require('../controllers/basketController')
 const router = new Router()
+const authMiddleware = require('../middleware/authMiddleware')
 const checkRole = require('../middleware/checkRoleMiddleware')
 
 router.get('/all',checkRole('admin'), basketController.getAllBaskets)
 
-router.get('/', basketController.getBasket)
+router.get('/',authMiddleware, basketController.getBasket)
 
-router.post('/', basketController.sendBasket)
+router.post('/',authMiddleware, basketController.sendBasket)
 
 router.post('/:id',checkRole('admin'), basketController.changeBasketStatus)
 
-router.delete('/:id', basketController.deleteBasket)
+router.delete('/:id',checkRole('admin'), basketController.deleteBasket)
 
 module.exports = router
