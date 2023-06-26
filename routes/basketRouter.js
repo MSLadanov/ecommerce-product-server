@@ -6,7 +6,7 @@ const checkRole = require('../middleware/checkRoleMiddleware')
 
 router.get('/all',checkRole('admin'), basketController.getAllBaskets)
 
-router.get('/',authMiddleware, basketController.getBasket)
+router.get('/',authMiddleware, basketController.getBaskets)
 
 router.post('/',authMiddleware, basketController.sendBasket)
 

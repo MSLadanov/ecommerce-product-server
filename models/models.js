@@ -63,6 +63,10 @@ const Sneakers = sequelize.define("sneakers", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  size: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
   description: {
     type: DataTypes.STRING,
     allowNull: false,
