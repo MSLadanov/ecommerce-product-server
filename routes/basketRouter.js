@@ -8,7 +8,7 @@ router.get('/all',checkRole('admin'), basketController.getAllBaskets)
 
 router.get('/',authMiddleware, basketController.getBaskets)
 
-router.post('/',authMiddleware, basketController.sendBasket)
+router.post('/send',authMiddleware, basketController.sendBasket)
 
 router.post('/:id',checkRole('admin'), basketController.changeBasketStatus)
 

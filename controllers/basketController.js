@@ -1,4 +1,5 @@
 const { Basket, User } = require("../models/models");
+const ApiError = require("../error/ApiError");
 const jwt = require("jsonwebtoken");
 
 const getUserByJwt = async (req) => {
@@ -18,10 +19,24 @@ class basketController {
     let baskets = await Basket.findAll();
     return res.json(baskets);
   }
-  async sendBasket(req, res) {
+  async sendBasket(req, res, next) {
+    const order = req.body.order;
+    if (!order) {
+      return next(ApiError.badRequest("Ошибка запроса отправки корзины!"));
+    }
+    if (!order.length) {
+      return next(ApiError.badRequest("Корзина пуста!"));
+    }
     const user = await getUserByJwt(req);
-    // const basket = Basket.create({ userId: user.id });
-    // return res.json({ basket });
+    const currentBasket = await Basket.findAll({ where: { userId: user.id, status:'current' } });
+    const updateBaskets = await Basket.update(
+      { status: "ordered", data: JSON.stringify(order)},
+      {
+        where: { id: currentBasket[0].id },
+      }
+    );
+    const basket = Basket.create({ userId: user.id, status: "current" });
+    return res.json({ message: "Заказ принят!" });
   }
   async changeBasketStatus() {}
   async deleteBasket() {}
