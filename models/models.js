@@ -43,6 +43,16 @@ const Basket = sequelize.define("basket", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  address:{
+    type: DataTypes.STRING(1024),
+    defaultValue: 'none',
+    allowNull: false,
+  },
+  sum:{
+    type: DataTypes.STRING,
+    defaultValue: 'none',
+    allowNull: false,
+  }
 });
 
 const Sneakers = sequelize.define("sneakers", {
