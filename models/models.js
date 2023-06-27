@@ -36,7 +36,7 @@ const Basket = sequelize.define("basket", {
     autoIncrement: true,
   },
   data: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(4096),
     allowNull: true,
   },
   status: {
@@ -68,7 +68,7 @@ const Sneakers = sequelize.define("sneakers", {
     allowNull: false,
   },
   description: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(4096),
     allowNull: false,
   },
   price: {

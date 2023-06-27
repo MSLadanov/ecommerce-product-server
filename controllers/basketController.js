@@ -21,6 +21,7 @@ class basketController {
   }
   async sendBasket(req, res, next) {
     const order = req.body.order;
+    const filteredOrder = {}
     if (!order) {
       return next(ApiError.badRequest("Ошибка запроса отправки корзины!"));
     }
@@ -28,9 +29,11 @@ class basketController {
       return next(ApiError.badRequest("Корзина пуста!"));
     }
     const user = await getUserByJwt(req);
-    const currentBasket = await Basket.findAll({ where: { userId: user.id, status:'current' } });
+    const currentBasket = await Basket.findAll({
+      where: { userId: user.id, status: "current" },
+    });
     const updateBaskets = await Basket.update(
-      { status: "ordered", data: JSON.stringify(order)},
+      { status: "ordered", data: JSON.stringify(order) },
       {
         where: { id: currentBasket[0].id },
       }
