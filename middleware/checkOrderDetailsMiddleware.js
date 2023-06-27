@@ -1,13 +1,24 @@
-const ApiError = require("../error/ApiError");
-
-module.exports = function(orderObject, next){
+module.exports = function (orderObject){
+    let orderCorrect = 'ok!'
     if('order' in orderObject && 'address' in orderObject){
-
+        orderObject.order.map((item) => {
+            if (!item.hasOwnProperty('id') || !item.hasOwnProperty('name') || !item.hasOwnProperty('brand') || !item.hasOwnProperty('size')){
+                orderCorrect = 'Отсутсвуют необходимые данные в заказе'
+            }  
+        })
+        let result = orderObject.order.reduce(function (acc, obj) { return acc + +obj.price; }, 0);
+        if(result!== +orderObject.sum){
+            orderCorrect = 'Сумма недействительна!'
+        }
     }
-    else if(!'order' in orderObject){
-        return next(ApiError.badRequest("Отсутсвует заказ!"));
-    } else if(!'address' in orderObject){
-        return next(ApiError.badRequest("Отсутсвует адрес"));
+    else if(!orderObject.hasOwnProperty('order')){
+        orderCorrect = "Отсутсвует заказ!";
+    } else if(!orderObject.hasOwnProperty('address')){
+        orderCorrect = "Отсутсвует адрес";
     }
-
+    else if(!orderObject.hasOwnProperty('sum')){
+        orderCorrect = "Отсутсвует сумма";
+    }
+    
+    return orderCorrect
 }
