@@ -12,6 +12,6 @@ router.post('/send',authMiddleware, basketController.sendBasket)
 
 router.patch('/change',checkRole('admin'), basketController.changeBasketStatus)
 
-router.delete('/:id',checkRole('admin'), basketController.deleteBasket)
+router.delete('/delete/:id',checkRole('admin'), basketController.deleteBasket)
 
 module.exports = router

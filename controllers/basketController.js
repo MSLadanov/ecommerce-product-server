@@ -50,25 +50,44 @@ class basketController {
   }
   async changeBasketStatus(req, res, next) {
     const id = +req.body.id;
-    const newStatus = req.body.status
-    if (!id || !newStatus ) {
-      return next(ApiError.badRequest("Идентификатор заказа или новый статус не корректны!"));
+    const newStatus = req.body.status;
+    if (!id || !newStatus) {
+      return next(
+        ApiError.badRequest(
+          "Идентификатор заказа или новый статус не корректны!"
+        )
+      );
     }
-    const currentBasket = await Basket.findOne({
+    const editingBasket = await Basket.findOne({
       where: { id },
     });
-    if(!currentBasket){
+    if (!editingBasket) {
       return next(ApiError.badRequest("Данного заказа не существует!"));
     }
     const basket = await Basket.update(
-       { status: newStatus},
-       {
-         where: { id },
+      { status: newStatus },
+      {
+        where: { id },
       }
     );
-    return res.json({message:`Статус заказа ${id} изменен на ${newStatus}`, basket:currentBasket});
+    return res.json({ message: `Статус заказа ${id} изменен на ${newStatus}` });
   }
-  async deleteBasket() {}
+  async deleteBasket(req, res, next) {
+    const { id } = req.params;
+    if (!id) {
+      return next(ApiError.badRequest("Ошибка запроса!"));
+    }
+    const removingBasket = await Basket.findOne({
+      where: { id },
+    });
+    if (!removingBasket) {
+      return next(ApiError.badRequest("Идентификатор заказа не корректен!"));
+    }
+    const baskets = await Basket.destroy({
+      where: { id },
+    });
+    return res.json({ message: `Заказ ${id} удален!` });
+  }
 }
 
 module.exports = new basketController();
