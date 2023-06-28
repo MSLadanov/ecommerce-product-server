@@ -48,7 +48,26 @@ class basketController {
       return next(ApiError.badRequest(orderCorrect));
     }
   }
-  async changeBasketStatus() {}
+  async changeBasketStatus(req, res, next) {
+    const id = +req.body.id;
+    const newStatus = req.body.status
+    if (!id || !newStatus ) {
+      return next(ApiError.badRequest("Идентификатор заказа или новый статус не корректны!"));
+    }
+    const currentBasket = await Basket.findOne({
+      where: { id },
+    });
+    if(!currentBasket){
+      return next(ApiError.badRequest("Данного заказа не существует!"));
+    }
+    const basket = await Basket.update(
+       { status: newStatus},
+       {
+         where: { id },
+      }
+    );
+    return res.json({message:`Статус заказа ${id} изменен на ${newStatus}`, basket:currentBasket});
+  }
   async deleteBasket() {}
 }
 
