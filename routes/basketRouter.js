@@ -10,6 +10,8 @@ router.get('/',authMiddleware, basketController.getBaskets)
 
 router.post('/send',authMiddleware, basketController.sendBasket)
 
+router.post('/cancel/:id',authMiddleware, basketController.cancelBasket)
+
 router.patch('/change',checkRole('admin'), basketController.changeBasketStatus)
 
 router.delete('/delete/:id',checkRole('admin'), basketController.deleteBasket)

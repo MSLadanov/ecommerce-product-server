@@ -72,6 +72,25 @@ class basketController {
     );
     return res.json({ message: `Статус заказа ${id} изменен на ${newStatus}` });
   }
+  async cancelBasket(req, res, next){
+    const { id } = req.params;
+    const user = await getUserByJwt(req);
+    const baskets = await Basket.findAll({ where: { userId: user.id } });
+    const inBaskets = baskets.find((item) => item.id === +id)
+    if(!inBaskets){
+      return next(ApiError.badRequest("Данного заказа не существует!"));
+    }
+    if(inBaskets.status === 'current'){
+      return next(ApiError.badRequest("Данный заказ еще не оформлен!"));
+    }
+    const basket = await Basket.update(
+      { status: 'cancelled' },
+      {
+        where: { id },
+      }
+    );
+    return res.json({ message: `Заказ ${id} отменен!` });
+  }
   async deleteBasket(req, res, next) {
     const { id } = req.params;
     if (!id) {
