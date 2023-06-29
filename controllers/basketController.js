@@ -1,7 +1,7 @@
 const { Basket, User } = require("../models/models");
 const ApiError = require("../error/ApiError");
 const jwt = require("jsonwebtoken");
-const checkRoleMiddleware = require("../middleware/checkOrderDetailsMiddleware");
+const checkOrderDetailsMiddleware= require("../middleware/checkOrderDetailsMiddleware");
 
 const getUserByJwt = async (req) => {
   const token = req.headers.authorization.split(" ")[1];
@@ -30,7 +30,7 @@ class basketController {
     if (!order.length) {
       return next(ApiError.badRequest("Корзина пуста!"));
     }
-    const orderCorrect = checkRoleMiddleware(req.body);
+    const orderCorrect = checkOrderDetailsMiddleware(req.body);
     if (orderCorrect === "ok!") {
       const user = await getUserByJwt(req);
       const currentBasket = await Basket.findAll({
