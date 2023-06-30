@@ -9,6 +9,6 @@ router.get('/', sneakerController.getAllSneakers)
 
 router.get('/:id', sneakerController.getSneakerById)
 
-router.delete('/:id', sneakerController.deleteSneaker)
+router.delete('/delete/:id',checkRole('admin'), sneakerController.deleteSneaker)
 
 module.exports = router

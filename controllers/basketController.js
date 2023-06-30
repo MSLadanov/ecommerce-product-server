@@ -93,7 +93,7 @@ class basketController {
   }
   async deleteBasket(req, res, next) {
     const { id } = req.params;
-    if (!id) {
+    if (!id || isNaN(+id)) {
       return next(ApiError.badRequest("Ошибка запроса!"));
     }
     const removingBasket = await Basket.findOne({

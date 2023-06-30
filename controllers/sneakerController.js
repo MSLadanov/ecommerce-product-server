@@ -41,7 +41,22 @@ class SneakerController {
     });
     return res.json(sneaker);
   }
-  async deleteSneaker() {}
+  async deleteSneaker(req, res, next) {
+    const { id } = req.params;
+    if (!id || isNaN(+id)) {
+      return next(ApiError.badRequest("Ошибка запроса!"));
+    }
+    const removingSneaker = await Sneakers.findOne({
+      where: { id },
+    });
+    if (!removingSneaker) {
+      return next(ApiError.badRequest("Идентификатор товара не корректен!"));
+    }
+    const baskets = await Sneakers.destroy({
+      where: { id },
+    });
+    return res.json({ message: `Товар ${id} удален!` });
+  }
 }
 
 module.exports = new SneakerController();
