@@ -51,7 +51,7 @@ class basketController {
   async changeBasketStatus(req, res, next) {
     const id = +req.body.id;
     const newStatus = req.body.status;
-    if (!id || !newStatus) {
+    if (!id || !newStatus || isNaN(+id)) {
       return next(
         ApiError.badRequest(
           "Идентификатор заказа или новый статус не корректны!"

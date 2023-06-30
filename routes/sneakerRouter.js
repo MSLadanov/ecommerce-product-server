@@ -9,6 +9,8 @@ router.get('/', sneakerController.getAllSneakers)
 
 router.get('/:id', sneakerController.getSneakerById)
 
+router.patch('/change',checkRole('admin'), sneakerController.changeSneaker)
+
 router.delete('/delete/:id',checkRole('admin'), sneakerController.deleteSneaker)
 
 module.exports = router

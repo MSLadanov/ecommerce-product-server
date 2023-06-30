@@ -41,6 +41,38 @@ class SneakerController {
     });
     return res.json(sneaker);
   }
+
+  async changeSneaker (req, res, next){
+    const {id, data} = req.body;
+    const newData = data;
+    if(Object.keys(newData).length > 1){
+      return next(ApiError.badRequest("Невозможно изменить более одного параметра!"));
+    }
+    if (!id || !data || isNaN(+id)) {
+      return next(
+        ApiError.badRequest(
+          "Идентификатор товара или новые данные не корректны!"
+        )
+      );
+    }
+    const editingSneaker= await Sneakers.findOne({
+      where: { id },
+    });
+    if (!editingSneaker) {
+      return next(ApiError.badRequest("Данного товара не существует!"));
+    }
+    const sneaker = await Sneakers.update(
+      { ...newData },
+      {
+        where: { id },
+      }
+    );
+    if(!sneaker[0]){
+      return next(ApiError.badRequest("Название параметра не корректно!"));
+    }
+    return res.json({ message: 'Данные успешно обновлены!'});
+  }
+
   async deleteSneaker(req, res, next) {
     const { id } = req.params;
     if (!id || isNaN(+id)) {
