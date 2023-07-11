@@ -6,7 +6,7 @@ const ApiError = require("../error/ApiError");
 class SneakerController {
   async createSneaker(req, res, next) {
     try {
-      const { name, brand, sex, description, price, discount, stock } =
+      const { name, brand, sex, description, price, discount, stock, size } =
         req.body;
       const sneaker = {
         name,
@@ -16,6 +16,7 @@ class SneakerController {
         price,
         discount,
         stock,
+        size
       };
       const { img1, img2, img3, img4 } = req.files;
       const imageArray = [img1, img2, img3, img4];

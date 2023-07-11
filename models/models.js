@@ -41,18 +41,19 @@ const Basket = sequelize.define("basket", {
   },
   status: {
     type: DataTypes.STRING,
+    defaultValue: "current",
     allowNull: false,
   },
-  address:{
+  address: {
     type: DataTypes.STRING(1024),
-    defaultValue: 'none',
+    defaultValue: "none",
     allowNull: false,
   },
-  sum:{
+  sum: {
     type: DataTypes.STRING,
-    defaultValue: 'none',
+    defaultValue: "none",
     allowNull: false,
-  }
+  },
 });
 
 const Sneakers = sequelize.define("sneakers", {
@@ -110,10 +111,11 @@ const Sneakers = sequelize.define("sneakers", {
   },
 });
 
-
-User.hasOne(Basket)
-Basket.belongsTo(User)
+User.hasOne(Basket);
+Basket.belongsTo(User);
 
 module.exports = {
-    User, Basket, Sneakers
-}
+  User,
+  Basket,
+  Sneakers,
+};
