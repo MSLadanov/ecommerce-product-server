@@ -9,7 +9,7 @@ const router = require('./routes/index')
 const errorHandler = require('./middleware/ErrorHandlingMiddleware')
 const path = require('path')
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3002;
 
 app.use(cors())
 app.use(express.json())
