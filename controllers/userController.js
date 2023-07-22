@@ -63,7 +63,9 @@ class UserController {
     }
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
     const id = decoded.id;
-    const user = await User.findOne({ id: { id } });
+    const user = await User.findOne({
+      where: { id },
+    });
     if (!user) {
       return next(ApiError.internal("Пользователь не найден!"));
     }
