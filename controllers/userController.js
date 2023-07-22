@@ -56,6 +56,29 @@ class UserController {
     const token = generateJwt(req.user.id, req.user.email, req.user.role);
     return res.json({ token });
   }
+  async getUserInfo(req, res, next) {
+    const token = req.headers.authorization.split(" ")[1];
+    if (!token) {
+      return res.status(401).json({ message: "Пользователь не авторизован!" });
+    }
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    const id = decoded.id;
+    const user = await User.findOne({ id: { id } });
+    if (!user) {
+      return next(ApiError.internal("Пользователь не найден!"));
+    }
+    const { name, surname, email, role, img, createdAt, updatedAt } = user;
+    return res.json({
+      id,
+      name,
+      surname,
+      email,
+      role,
+      img,
+      createdAt,
+      updatedAt,
+    });
+  }
 }
 
 module.exports = new UserController();
