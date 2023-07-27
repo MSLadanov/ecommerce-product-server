@@ -2,7 +2,7 @@ module.exports = function (orderObject){
     let orderCorrect = 'ok!'
     if('order' in orderObject && 'address' in orderObject){
         orderObject.order.map((item) => {
-            if (!item.hasOwnProperty('id') || !item.hasOwnProperty('name') || !item.hasOwnProperty('brand') || !item.hasOwnProperty('size')){
+            if (!item.hasOwnProperty('id') || !item.hasOwnProperty('name') || !item.hasOwnProperty('brand') || !item.hasOwnProperty('sizes')){
                 orderCorrect = 'Отсутсвуют необходимые данные в заказе'
             }  
         })

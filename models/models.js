@@ -74,8 +74,8 @@ const Sneakers = sequelize.define("sneakers", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  size: {
-    type: DataTypes.INTEGER,
+  sizes: {
+    type: DataTypes.ARRAY(DataTypes.STRING),
     allowNull: false,
   },
   description: {
@@ -88,10 +88,6 @@ const Sneakers = sequelize.define("sneakers", {
   },
   discount: {
     type: DataTypes.INTEGER,
-  },
-  stock: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
   },
   img1: {
     type: DataTypes.STRING,
