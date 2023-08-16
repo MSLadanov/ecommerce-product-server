@@ -15,7 +15,7 @@ class SneakerController {
         description,
         price,
         discount,
-        sizes
+        sizes:sizes.split(',')
       };
       const { img1, img2, img3, img4 } = req.files;
       const imageArray = [img1, img2, img3, img4];
