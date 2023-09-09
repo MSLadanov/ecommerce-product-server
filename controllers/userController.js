@@ -81,6 +81,27 @@ class UserController {
       updatedAt,
     });
   }
+  async getUserInfoById(req, res, next) {
+    const { id } = req.params;
+    console.log(res)
+    const token = req.headers.authorization.split(" ")[1];
+    if (!token) {
+      return res.status(401).json({ message: "Пользователь не авторизован!" });
+    }
+    const user = await User.findOne({
+      where: { id },
+    });
+    if (!user) {
+      return next(ApiError.internal("Пользователь не найден!"));
+    }
+    const { name, surname, email, img } = user;
+    return res.json({
+      name,
+      surname,
+      email,
+      img,
+    });
+  }
 }
 
 module.exports = new UserController();
