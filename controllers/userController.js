@@ -83,7 +83,6 @@ class UserController {
   }
   async getUserInfoById(req, res, next) {
     const { id } = req.params;
-    console.log(res)
     const token = req.headers.authorization.split(" ")[1];
     if (!token) {
       return res.status(401).json({ message: "Пользователь не авторизован!" });
